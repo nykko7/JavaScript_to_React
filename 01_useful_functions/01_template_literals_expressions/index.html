@@ -6,29 +6,43 @@
 		<title>Template Literals - Expressions</title>
 	</head>
 	<body>
+		<h1>Template Literals</h1>
+		<p>Plantilla de cadena de texto que permite el uso de expresiones incrustadas. </p>
 		<script>
 			const nombre = 'Nicolas';
+			//USO BÁSICO:
 			console.log(`Mi nombre es ${nombre}`);
+			//Tambien se pueden insertar valores directamente
 			console.log(`Mi nombre es ${27}`);
+			//Se puede insertar un valor en string
 			console.log(`Este es el ${'Curso de JavaScript para React'}`);
+			//Una asignación de variable retorna su valor, por eso se imprime el nombre:
 			console.log(`Mi nombre es ${(x = 'Nicolas')}`);
+			//Para retornar la funcion debe ejecutarse (Agregando doble paréntesis al final:)
 			console.log(
 				`Mi nombre es ${(function name() {
 					return 'Nico';
 				})()}`
 			);
+			//También funciona si no tuviese nombre,ya que su uso es solo dentro de la plantilla.
 			console.log(
 				`Mi nombre es ${(function () {
 					return 'Nico';
 				})()}`
 			);
+			//Lo mismo con funciones arrows:
 			console.log(
 				`Mi nombre es ${(() => {
 					return 'Nico Arrow';
 				})()}`
 			);
+			//Condicionales:
+			//Los template literals solo funcionan con expresiones un if o for no pueden ser utilizados.
+			//Se deben usar ternarios para hacer condicionales, ya que funciona como una expresión y se puede insertar en la plantilla.
 			console.log(`Mi nombre es ${true && 'Nico ternario'}`);
+			//Otra forma.
 			console.log(`Mi nombre es ${false ? 'Nico true' : 'Nico false'}`);
+			//Misma razón que los ifs, como no pueden ser utilizados los for, se debe utilizar la funcion map para recorrer los arreglos:
 			console.log(
 				`Mi nombre es ${['a', 'b'].map((letra) => `${letra}-styled`)}`
 			);
