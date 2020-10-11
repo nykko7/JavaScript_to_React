@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tagged Templates</title>
+		<style>
+			body {
+				display: flex;
+				flex-direction: column;
+				margin: 0;
+				height: 100vh;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				font-family: system-ui;
+				background-color: #264653;
+				color: #f2f5ff;
+				font-size: 2em;
+				text-shadow: 2px 3px rgba(0, 0, 0, 0.5);
+			}
+			hr {
+				width: 80%;
+				height: 5px;
+				background-color: white;
+			}
+
+			strong {
+				color: #f4a261;
+				padding: 0.15em 0.4em;
+				background-color: #2a9d8f;
+				border-radius: 20px;
+				border: 2px solid #f2f5ff;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Tagged Templates</h1>
+		<p>
+			Funciones que permiten ingresar varibales a traves de un Template String
+			directamente.
+		</p>
+		<hr />
+		<!-- <p>El trabajo duro supera al talento natural</p> -->
+
+		<script>
+			//Se crea la funcion que recibe como parametros: el template string y las expresiones insertadas en la plantilla como arreglos.
+			//PD: Cuando no se sabe la cantidad exacta de argumentos que se van a utilizar, se puede agregar ... antes del parametro, lo que quiere decir que cualquier cantidad de argumentos los va a convertir en un arreglo para luego utilizarlos.
+			function taggedTemplate(strings, ...dynamicValues) {
+				console.log(strings, dynamicValues);
+			}
+
+			//Se ejecuta la funcion sin utilizar paréntesis, solo las comillas invertidas:
+			taggedTemplate`hola ${'mundo'} ${'!!!'}`;
+		</script>
+
+		<script>
+			function taggedTemplate(strings, ...dynamicValues) {
+				// console.log(strings, dynamicValues);
+				let newContent = '';
+				strings.forEach((string, index) => {
+					// let strong = '';
+					// if (dynamicValues[index]){
+					//   strong = `<strong>${dynamicValues[index]}</strong>`;
+					// }
+					const strong = dynamicValues[index]
+						? `<strong>${dynamicValues[index]}</strong>`
+						: '';
+					newContent += `${string}${strong}`;
+				});
+				// console.log(newContent);
+				return newContent;
+			}
+
+			const message = taggedTemplate`El ${'trabajo duro'} supera al ${'talento natural.'}`;
+
+			var parrafo = document.createElement('p');
+			parrafo.innerHTML = message;
+
+			document.body.appendChild(parrafo);
+		</script>
+	</body>
+</html>
