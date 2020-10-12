@@ -1,0 +1,91 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ShortHand Property Names</title>
+		<link rel="stylesheet" href="css/styles.css" />
+	</head>
+
+	<body>
+		<main>
+			<h1>
+				La mejor.
+				<br />
+				Para los mejores
+			</h1>
+			<div class="hero">
+				<div class="wrapper">
+					<div class="hero-content">
+						<div class="mac"></div>
+						<div class="app">
+							<p>
+								<strong> Precio: </strong>
+								<span id="price">-</span>
+							</p>
+							<p>
+								<strong> Precio oferta: </strong>
+								<span id="offer">-</span>
+							</p>
+							<p>
+								<strong> Precio Final: </strong>
+								<span id="final-price">-</span>
+							</p>
+							<button class="button" id="make-offer">Regatear</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script>
+			//Manipulación de Objetos en JavaScript:
+			const price = 2700;
+			const macbook = {
+				//Shorthand Property Name: crear y asignar atributo con mismo nombre, en vez de {price: price,}
+				price,
+				// getPrice: function(){
+
+				// },
+				//getter:
+				get finalPrice() {
+					return this.price * 1.19;
+				},
+				//setter:
+				set offer(offer) {
+					this.price -= offer;
+				},
+				//obtener valor:
+				getPrice() {
+					console.log(this.price);
+				},
+
+				//generador de descuentos:
+				//Forma antigua:
+				discount: function* (offer) {
+					yield offer;
+				},
+
+				*discount(offer) {
+					let price = this.finalPrice;
+					while (true) {
+						yield (price -= offer);
+					}
+				},
+			};
+
+			window.price.textContent = macbook.price;
+			macbook.offer = 600;
+			window.offer.textContent = macbook.price;
+
+			//Los guiones no son permitidos al buscar un id, se debe agregar entre comillas y parentesis
+			//Como finalPrice es un getter, no debe llevar paréntesis.
+			window['final-price'].textContent = macbook.finalPrice;
+			const makeAnOffer = macbook.discount(15);
+
+			//Se añade generador al boton de regatear:
+			window['make-offer'].addEventListener('click', () => {
+				window['final-price'].textContent = makeAnOffer.next().value;
+			});
+		</script>
+	</body>
+</html>
