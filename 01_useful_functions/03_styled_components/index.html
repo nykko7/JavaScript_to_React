@@ -4,21 +4,36 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Styled Components</title>
+		<style>
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #fff;
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="container"></div>
 		<script>
+			//Función que crea el componente a partir de un Template Literals.
+			//Recibe como parametros el texto de plantilla y los valores dinamicos:
 			function component(strings, ...dynamicValues) {
+				//retorna una funcion que recibe la entrada "props"
 				return function (props) {
+					//Crea una copia en memoria de strings para poder ser modificado sin alterar strings.
 					let newContent = strings.slice();
-
+					//Por cada valor dinamico se agrega el contenido de la propiedad en props a los elementos del arreglo newContent (Obteniendolo por el nombre. Ej 'title').
 					dynamicValues.forEach((value, index) => {
 						newContent[index] += props[value];
 					});
+					//Une los elementos del array para devolver el nuevo contenido en texto plano.
 					return newContent.join('');
 				};
 			}
 
+			//Funcion que agrega los tags, estilos y contenido a cada componentes.
 			const styled = {
 				h1: function (styles) {
 					return function (content) {
@@ -29,29 +44,72 @@
           `;
 					};
 				},
-				h2: '',
-				div: '',
+				h3: function (styles) {
+					return function (content) {
+						return `
+            <h3 style="${styles}">
+              ${content}
+            </h3>
+          `;
+					};
+				},
+				p: function (styles) {
+					return function (content) {
+						return `
+            <p style="${styles}">
+              ${content}
+            </p>
+          `;
+					};
+				},
 			};
 
+			//Estilos para Titulos <h1>:
 			const TitleStyled = styled.h1`
-				color: orange;
+				color: #023047;
 				font-family: system-ui;
 				font-size: 50px;
-				text-shadow: 2px 2px 0 black;
-				line-height: 100vh;
+				text-shadow: 2px 2px 2px #70877f;
 			`;
 
+			//Estilos para Subtitulos <h3>:
+			const SubtitleStyled = styled.h3`
+				color: #fca311;
+				font-family: system-ui;
+				font-size: 30px;
+				text-shadow: 2px 2px 2px #70877f;
+			`;
+
+			//Estilos para Parrafos <p>:
+			const DescriptionStyled = styled.p`
+				color: #000000;
+				font-family: system-ui;
+				font-size: 20px;
+				text-shadow: 1px 1px 2px #70877f;
+				text-align: justify;
+			`;
+
+			//Contenido que desean agregar a los componentes:
 			const props = {
-				message: 'No Te Rindas',
+				title: 'Título',
+				subtitle: 'Subtítulo',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus pariatur sequi animi quo blanditiis labore tempora? Cumque beatae voluptatem, ducimus totam nemo consequuntur officia est! Repudiandae libero nobis at minus!',
 			};
 
-			const Title = component`<marquee>${'message'}</marquee>`(props);
+			const Title = component`----- ${'title'} -----`(props);
+			const Subtitle = component`----- ${'subtitle'} -----`(props);
+			const Description = component`${'description'}`(props);
 
+			//Renderiza el componente en un contenedor:
 			function render(component, container) {
-				container.innerHTML = component;
+				container.innerHTML += component;
 			}
 
+			//Se renderizan los componentes en el el div con id: #container
 			render(TitleStyled(Title), window.container);
+			render(SubtitleStyled(Subtitle), window.container);
+			render(DescriptionStyled(Description), window.container);
 		</script>
 	</body>
 </html>
