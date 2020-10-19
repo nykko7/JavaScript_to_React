@@ -22,7 +22,7 @@
 			function component(strings, ...dynamicValues) {
 				//retorna una funcion que recibe la entrada "props"
 				return function (props) {
-					//Crea una copia en memoria de strings para poder ser modificado sin alterar strings.
+					//Crea una copia en memoria del arreglo strings para poder ser modificado sin alterar strings.
 					let newContent = strings.slice();
 					//Por cada valor dinamico se agrega el contenido de la propiedad en props a los elementos del arreglo newContent (Obteniendolo por el nombre. Ej 'title').
 					dynamicValues.forEach((value, index) => {
